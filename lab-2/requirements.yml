@@ -1,0 +1,5 @@
+---
+- name: docker-role
+  src: https://gitlab.com/ansible-roles9394643/docker-role/
+  scm: git
+  version: main

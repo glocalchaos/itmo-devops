@@ -1,0 +1,2 @@
+container_name: locallib
+container_ports: "8000:8000"

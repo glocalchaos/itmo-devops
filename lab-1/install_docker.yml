@@ -1,0 +1,40 @@
+- hosts: app
+  become: yes
+  tasks:
+    - name: update
+      apt:
+        update_cache: yes
+    - name: Установить зависимости
+      apt:
+        name: 
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Добавить Docker GPG ключ
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Добавить Docker репозиторий
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+
+    - name: Установить Docker
+      apt:
+        name: docker-ce
+        state: latest
+
+    - name: Убедиться, что Docker запущен
+      service:
+        name: docker
+        state: started
+        enabled: true
+    
+    # - name: adding existing user "{{ ansible_user }}" to group sudo
+    #   user:
+    #     name: "{{ ansible_user }}"
+    #     groups: docker
+    #     append: yes

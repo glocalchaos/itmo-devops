@@ -1,0 +1,16 @@
+- hosts: app
+  tasks:
+    - name: Убедиться, что git установлен
+      become: yes
+      apt:
+        name: git
+        state: present
+        
+    - name: start
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: timurbabs/django
+        state: started
+        ports:
+          - "{{ container_ports }}"
+        

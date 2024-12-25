@@ -1,0 +1,44 @@
+- hosts: app
+  tasks:
+    - name: Убедиться, что git установлен
+      become: yes
+      apt:
+        name: git
+        state: present
+
+    # - name: Клонировать репозиторий
+    #   git:
+    #     repo: https://github.com/mdn/django-locallibrary-tutorial.git
+    #     dest: /home/vagrant/locallibrary
+    #     #version: main
+    #     version: c8fa1e237fe2eda9c2e0d280726c62764c33982c
+    
+    # # - name: Dockerfile
+    #   copy:
+    #     dest: /home/vagrant/locallibrary/Dockerfile
+    #     content: |
+    #       FROM python:3.10-slim
+    #       WORKDIR /app
+    #       COPY requirements.txt /app/
+    #       RUN pip install --no-cache-dir -r requirements.txt
+    #       COPY . /app
+    #       EXPOSE 8000
+    #       CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    
+    # - name: build image
+    #   community.docker.docker_image:
+    #     name: locallib
+    #     build:
+    #       path: /home/vagrant/locallibrary/
+    #     tag: latest
+    #     source: build
+    
+    - name: start
+      community.docker.docker_container:
+        name: locallib
+        #image: locallib:latest
+        image: timurbabs/django:latest
+        state: started
+        ports:
+          - "8000:8000"
+        

@@ -1,0 +1,9 @@
+[app]
+srv3 ansible_host=192.168.56.203
+
+[web]
+srv4 ansible_host=192.168.56.204
+srv5 ansible_host=192.168.56.205
+
+[all:vars]
+ansible_user=vagrant
